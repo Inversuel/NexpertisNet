@@ -1,0 +1,92 @@
+﻿@model List<CrudWebList.Models.Task>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>CRUD for ExpressApi</h1>
+    <p class="lead">.Net for using api in express on localhost 3000 </p>
+</div>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    <input href="#" id="btnToPdf" type="button" value="Get pdf of click tasks" class="btn btn-link" data-dismiss="alert" />
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("ID")
+        </th>
+        <th>
+            @Html.Label("User")
+        </th>
+        <th>
+            @Html.Label("AssignedUser")
+        </th>
+        <th>
+            @Html.Label("Title")
+        </th>
+        <th>
+            @Html.Label("Describe")
+        </th>
+        <th>
+            @Html.Label("StartDate")
+        </th>
+        <th>
+            @Html.Label("EndDate")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="idclass">
+                @Html.DisplayFor(modelItem => item._id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignedUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Describe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditTask", new { id = item._id }) |
+                @Html.ActionLink("Details", "Details", new { id = item._id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item._id })
+            </td>
+        </tr>
+
+    }
+    
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    var listId = "";
+    $(".idclass").click(function () {
+        $(this).addClass("warning");
+        listId += $(this).html() + ',';
+        console.log(listId)
+    });
+
+    $("#btnToPdf").click(function () {
+        console.log(listId)
+        window.location.href = '@Url.Action("NetToPdf", "Home")?ids=' + listId;
+    })
+
+</script>
